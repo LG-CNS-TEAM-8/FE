@@ -1,12 +1,17 @@
-import logo from "./logo.svg";
-import "./App.css";
+// App.js
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "./components/ui/provider";
-import { Button } from "@chakra-ui/react";
+import SignupPage from "./pages/SignupPage";
+import "./App.css";
 
 function App() {
   return (
     <Provider>
-      <div className="App"></div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<SignupPage />} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   );
 }
