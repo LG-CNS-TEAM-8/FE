@@ -1,8 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { Provider } from "./components/ui/provider";
+import { Button } from "@chakra-ui/react";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <Provider>
+      <div className="App"></div>
+    </Provider>
+  );
 }
 
 export default App;
