@@ -13,7 +13,7 @@ import logo from "../assets/Logo.png";
 
 const Footer = () => {
   return (
-    <Box bg="black" color="white" height={250} py={12} px={5}>
+    <Box bg="black" color="white" height={250} mt={12} py={12} px={5}>
       <Flex
         maxW="6xl"
         mx="20"

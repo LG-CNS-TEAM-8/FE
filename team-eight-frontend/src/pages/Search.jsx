@@ -1,7 +1,7 @@
 import { Flex, Text, VStack } from "@chakra-ui/react";
 import NewsListItem from "../components/NewsListItem";
 
-const Home = () => {
+const Search = () => {
   return (
     <Flex
       direction={"column"}
@@ -10,11 +10,10 @@ const Home = () => {
       mx="auto"
       mt={10}
     >
-      <VStack align={"start"} mb={8}>
+      <VStack mb={8} align={"start"}>
         <Text fontSize="2xl" fontWeight="bold" mb={1}>
-          My News
+          "검색어와 관련된 뉴스들"
         </Text>
-        <Text color="gray.500">관련 키워드들...</Text>
       </VStack>
 
       {/* 나중에 데이터들을 리스트로 받아서 map으로 호출 */}
@@ -32,4 +31,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Search;

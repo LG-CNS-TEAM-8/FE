@@ -2,6 +2,7 @@ import "./App.css";
 import { Provider } from "./components/ui/provider";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import Search from "./pages/Search";
 
 function App() {
   return (
