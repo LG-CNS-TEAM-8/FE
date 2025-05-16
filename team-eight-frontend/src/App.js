@@ -1,7 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Provider } from "./components/ui/provider";
-import { Button } from "@chakra-ui/react";
+import Footer from "./components/Footer";
 
 function App() {
   return (
