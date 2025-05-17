@@ -10,6 +10,9 @@ function App() {
   return (
     <Provider>
       <div className="App">
+        <NavBar></NavBar>
+        <Mypage></Mypage>
+        <Footer></Footer>
       </div>
     </Provider>
   );
