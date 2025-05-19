@@ -6,8 +6,8 @@ import { Provider } from "./components/ui/provider";
 import Mypage from "./pages/Mypage";
 import MypageEdit from "./pages/MypageEdit";
 import MypageSettings from "./pages/MypageSettings";
-import Search from "./components/Search";
 import Home from "./pages/Home";
+import Searchpage from "./pages/Searchpage";
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="search" element={<Searchpage />} />
             <Route path="mypage" element={<Mypage />} />
             <Route path="mypage/edit" element={<MypageEdit />} />
             <Route path="mypage/settings" element={<MypageSettings />} />
