@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import './SignupPage.css';
+import {
+    Box,
+    Flex,
+    Stack,
+    Input,
+    Button,
+    Heading,
+    InputGroup,
+    IconButton,
+} from '@chakra-ui/react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +19,9 @@ const SignupPage = () => {
         email: '',
     });
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -16,49 +29,93 @@ const SignupPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // 회원가입 로직 추가 
-        console.log('회원가입 정보:', formData);
+        // 회원가입 로직
+        console.log('Signup Information:', formData);
         alert('회원가입이 완료되었습니다!');
     };
 
     return (
-        <div className="signup-container">
-            <div className="signup-card">
-                <h2 className="signup-title">로고섹션</h2>
-                
+        <Flex minH="100vh" align="center" justify="center" bg="black">
+            <Box
+                bg="white"
+                p={8}
+                rounded="md"
+                boxShadow="lg"
+                w={{ base: '90%', md: '400px' }}
+            >
                 <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="아이디를 입력하세요"
-                        value={formData.username}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="비밀번호를 입력하세요"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="비밀번호를 다시 입력하세요"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="이메일을 입력하세요"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                    <button type="submit">다음</button>
+                    <Stack spacing={4}>
+                        <Heading textAlign="center" size="lg">
+                            로고섹션
+                        </Heading>
+                        <Input
+                            variant="flushed"
+                            placeholder="아이디를 입력하세요"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                        />
+                        <InputGroup
+                            endElement={
+                                <IconButton
+                                    variant="ghost"
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                    icon={showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                />
+                            }
+                        >
+                            <Input
+                                variant="flushed"
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="비밀번호를 입력하세요"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                        </InputGroup>
+                        <InputGroup
+                            endElement={
+                                <IconButton
+                                    variant="ghost"
+                                    aria-label={
+                                        showConfirmPassword ? 'Hide password' : 'Show password'
+                                    }
+                                    icon={showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                />
+                            }
+                        >
+                            <Input
+                                variant="flushed"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                placeholder="비밀번호 확인"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                            />
+                        </InputGroup>
+                        <Input
+                            variant="flushed"
+                            type="email"
+                            placeholder="이메일을 입력하세요"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                        <Button
+                            borderRadius={0}
+                            type="submit"
+                            variant="solid"
+                            colorScheme="teal"
+                            width="full"
+                        >
+                            다음
+                        </Button>
+                    </Stack>
                 </form>
-            </div>
-        </div>
+            </Box>
+        </Flex>
     );
 };
 
