@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <Box mb={8} px={12} height="60px" display="flex" alignItems="center">
       {/* 홈 버튼 */}
-      <Link to="/">
+      <Link to="/home">
         <Button
           p={2}
           variant="ghost"
