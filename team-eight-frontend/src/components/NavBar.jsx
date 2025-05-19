@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
   return (
     <Box
-      bg="white"
       mb={8}
       px={12}
       boxShadow="sm"
@@ -38,10 +37,12 @@ export default function NavBar() {
         p={2}
         aria-label="Search"
         variant="ghost"
+        color="fg"
         _hover={{
-          color: "gray.400",
+          backgroundColor: "transparent",
           transform: "scale(1.05)",
           cursor: "pointer",
+          color: "gray.500",
         }}
       >
         <AiOutlineSearch />
