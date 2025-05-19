@@ -14,17 +14,12 @@ import logo from "../assets/Logo.png";
 const Footer = () => {
   return (
     <Box bg="black" color="white" height={250} mt={12} py={12} px={5}>
-      <Flex
-        maxW="6xl"
-        mx="20"
-        justify="space-between"
-        wrap="wrap"
-        align="flex-start"
-      >
+      <Flex mx="12" justify="space-between" wrap="wrap" align="flex-start">
         {/* 왼쪽 아이콘 영역 */}
         <HStack spacing={10} mb={{ base: 6, md: 0 }}>
           <Link href="http://localhost:3000" aria-label="Home Link">
             <Image
+              mr={2}
               src={logo}
               alt="Logo"
               boxSize={"32px"}
@@ -42,6 +37,7 @@ const Footer = () => {
           >
             <Icon
               as={FaGithub}
+              mr={2}
               boxSize={7}
               color="white"
               _hover={{
@@ -85,7 +81,7 @@ const Footer = () => {
           </VStack>
 
           {/* Backend */}
-          <VStack align="start" spacing={1}>
+          <VStack align="start" spacing={1} pr={36}>
             <Text fontWeight="bold" mb={2}>
               Backend
             </Text>
