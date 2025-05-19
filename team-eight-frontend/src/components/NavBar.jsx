@@ -5,10 +5,8 @@ import { CgProfile } from "react-icons/cg";
 export default function NavBar() {
   return (
     <Box
-      bg="white"
       mb={8}
       px={10}
-      boxShadow="sm"
       height="60px"
       display="flex"
       alignItems="center"
@@ -18,11 +16,12 @@ export default function NavBar() {
         p={2}
         variant="ghost"
         aria-label="Home"
-        color="black"
+        color="fg"
         _hover={{
-          color: "gray.400",
+          backgroundColor: "transparent",
           transform: "scale(1.05)",
           cursor: "pointer",
+          color: "gray.500",
         }}
       >
         <AiOutlineHome />
@@ -35,10 +34,12 @@ export default function NavBar() {
         p={2}
         aria-label="Search"
         variant="ghost"
+        color="fg"
         _hover={{
-          color: "gray.400",
+          backgroundColor: "transparent",
           transform: "scale(1.05)",
           cursor: "pointer",
+          color: "gray.500",
         }}
       >
         <AiOutlineSearch />
@@ -49,10 +50,12 @@ export default function NavBar() {
         p={0}
         aria-label="User"
         variant="ghost"
+        color="fg"
         _hover={{
-          color: "gray.400",
+          backgroundColor: "transparent",
           transform: "scale(1.05)",
           cursor: "pointer",
+          color: "gray.500",
         }}
       >
         <CgProfile />
