@@ -6,7 +6,6 @@ import { FiLogOut, FiTrash, FiChevronRight } from "react-icons/fi";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const MypageSettings = () => {

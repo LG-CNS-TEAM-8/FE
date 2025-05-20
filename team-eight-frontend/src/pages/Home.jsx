@@ -25,7 +25,7 @@ const Home = () => {
     <Box width={"100%"}>
       <NavBar />
       <Flex direction={"column"} alignItems={"start"} mx={12} mt={10}>
-        <VStack align={"start"} mb={8}>
+        <VStack mx={4} align={"start"} mb={8}>
           <Text fontSize="3xl" fontWeight="bold">
             My News
           </Text>

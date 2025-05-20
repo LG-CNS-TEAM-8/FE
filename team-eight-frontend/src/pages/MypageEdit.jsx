@@ -10,14 +10,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import { FaChevronLeft, FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { FaChevronLeft } from "react-icons/fa";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 const MypageEdit = () => {
-  const [keywords, setKeywords] = useState(["축구", "알고리즘", "코딩테스트"]);
+  // const [keywords, setKeywords] = useState(["축구", "알고리즘", "코딩테스트"]);
 
   return (
     <Box>
