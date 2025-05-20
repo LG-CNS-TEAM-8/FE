@@ -1,7 +1,9 @@
-import { Box, Flex, Text, Button, Icon } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Icon, IconButton } from "@chakra-ui/react";
+import { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const NewsListItem = () => {
+  const [isLiked, setIsLiked] = useState(false);
   return (
     <Box
       width={"100%"}
@@ -28,12 +30,17 @@ const NewsListItem = () => {
             </Flex>
           </Box>
         </Flex>
-        <Icon
+        <IconButton
+          variant={"plain"}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsLiked(!isLiked);
+          }}
           mt={48}
           mr={2}
-          as={true ? FaHeart : FaRegHeart}
+          as={isLiked ? FaHeart : FaRegHeart}
           boxSize={8}
-          color={true ? "red.500" : "gray.400"}
+          color={isLiked ? "red.500" : "gray.400"}
           cursor="pointer"
         />
       </Flex>
