@@ -22,11 +22,11 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signup/keywords" element={<SignupKeywordPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="home" element={<Home />} />
-            <Route path="search" element={<Searchpage />} />
-            <Route path="mypage" element={<Mypage />} />
-            <Route path="mypage/edit" element={<MypageEdit />} />
-            <Route path="mypage/settings" element={<MypageSettings />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/search" element={<Searchpage />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/edit" element={<MypageEdit />} />
+            <Route path="/mypage/settings" element={<MypageSettings />} />
           </Routes>
         </div>
       </BrowserRouter>
