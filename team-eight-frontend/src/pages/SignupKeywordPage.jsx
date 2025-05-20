@@ -1,16 +1,12 @@
-import { PasswordInput } from "../components/ui/password-input";
 import {
   Box,
   Button,
-  Field,
   Flex,
   HStack,
-  IconButton,
   Image,
   Input,
   Stack,
   Tag,
-  TagLabel,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
@@ -18,21 +14,39 @@ import {
 import myLogo from "../assets/myLogo.png";
 import { useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+import { interest } from "../api/user_api";
 
 const SignupKeywordPage = () => {
+  const location = useLocation();
+  const state = location.state;
+
+  const userId = state.userId;
   const [keyword, setKeyword] = useState("");
   const [keywords, setKeywords] = useState([]);
 
-  const handleAddKeyword = () => {
+  const handleAddKeyword = async () => {
     if (keyword.trim() !== "" && !keywords.includes(keyword)) {
       setKeywords([...keywords, keyword]);
       setKeyword("");
+      try {
+        const res = await addInterest({ userId, keyword });
+        console.log("키워드 추가 성공: ", res);
+      } catch (err) {
+        console.error("❌ 키워드 추가 실패 ❌:", err);
+      }
     }
   };
 
-  const handleRemoveKeyword = (removeKeyword) => {
+  const handleRemoveKeyword = async (removeKeyword) => {
     setKeywords(keywords.filter((k) => k !== removeKeyword));
+    try {
+      const res = await deleteInterest({ userId, keyword });
+      console.log("키워드 삭제 성공: ", res);
+    } catch (err) {
+      console.error("❌ 키워드 삭제 실패 ❌:", err);
+    }
   };
 
   return (
