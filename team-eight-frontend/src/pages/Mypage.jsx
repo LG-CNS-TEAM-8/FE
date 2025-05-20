@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Avatar,
   Text,
   Button,
   Icon,
@@ -22,7 +21,7 @@ const Mypage = () => {
   return (
     <>
       <NavBar />
-      <Box px={12} minH="100vh">
+      <Box px={16} minH="100vh">
         {/* 상단 프로필 영역 */}
         <Flex
           bg="gray.100"

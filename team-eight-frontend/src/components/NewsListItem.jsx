@@ -5,18 +5,14 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
   const [liked, setLiked] = useState(initiallyLiked || false);
 
-  // 뉴스 다이얼로그 열리는 함수 예시 (외부에서 내려받거나)
-  const openNewsDialog = () => {
-  };
+  const openNewsDialog = () => {};
 
-  // 뉴스 아이템 클릭 시 다이얼로그 열기
   const handleItemClick = () => {
     openNewsDialog();
   };
 
-  // 하트 클릭 시 liked 상태 토글, 이벤트 버블링 막기
   const handleHeartClick = (e) => {
-    e.stopPropagation(); // 하트 클릭 시 부모 클릭 이벤트 막음(뉴스 다이얼로그 안 뜨게)
+    e.stopPropagation();
     setLiked(!liked);
   };
 
@@ -30,7 +26,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
       mb={6}
       boxShadow="sm"
       _hover={{ boxShadow: "md" }}
-      onClick={handleItemClick}  // 뉴스 다이얼로그 열기용 클릭 이벤트
+      onClick={handleItemClick}
       cursor="pointer"
     >
       <Flex mx={2} height={"100%"} justify="space-between" align="center">
@@ -43,7 +39,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
             mr={8}
             mt={1}
             mb={1}
-            aspectRatio={4 / 3} // 4:3 비율 유지
+            aspectRatio={4 / 3}
           >
             {thumbnail ? (
               <Image
@@ -62,7 +58,14 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
               <Text fontWeight="bold" fontSize="2xl" mb={2}>
                 {title}
               </Text>
-              <Text fontSize="md" color="gray.600" mb={2} textAlign={"left"}>
+              <Text
+                fontSize="md"
+                color="gray.600"
+                mb={2}
+                textAlign="left"
+                noOfLines={3}
+                maxW="400px"
+              >
                 {description}
               </Text>
             </Flex>
@@ -75,7 +78,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
           boxSize={8}
           color={liked ? "red.500" : "gray.400"}
           cursor="pointer"
-          onClick={handleHeartClick} // 하트 클릭 이벤트 연결
+          onClick={handleHeartClick}
         />
       </Flex>
     </Box>
