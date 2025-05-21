@@ -1,43 +1,37 @@
 import React, { useState } from "react";
-import { Box, Input, List, ListItem, Text } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 
-const suggestions = [];
-
-export default function Search() {
+export default function Search({ onSearch }) {
   const [query, setQuery] = useState("");
 
-  const filtered =
-    query && Array.isArray(suggestions)
-      ? suggestions.filter((item) => item.includes(query))
-      : [];
-
-  // 돋보기 클릭 시 실행할 함수
   const handleSearchClick = () => {
-    alert(`검색 실행: ${query}`);
+    if (query.trim() === "") return;
+    onSearch(query.trim());
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearchClick();
+    }
   };
 
   return (
     <Box w="100%" maxW="600px" mx="auto" mt={10}>
-      <Box
-        bg="transparent"
-        borderRadius="md"
-        boxShadow="none"
-        overflow="hidden"
-        p={4}
-      >
+      <Box bg="transparent" borderRadius="md" boxShadow="none" overflow="hidden" p={4}>
         <Box position="relative" width="100%">
           <Input
             placeholder="검색어 입력"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             fontWeight="bold"
             mb={2}
             border="1px solid"
-            borderColor="fg" 
-            _focus={{ borderColor: "gray.300", boxShadow: "none" }}
+            borderColor="gray.300"
+            _focus={{ borderColor: "gray.500", boxShadow: "none" }}
             pr="40px"
-            color="fg"
-            sx={{ caretColor: "fg" }}
+            color="black"
+            sx={{ caretColor: "black" }}
           />
           <Box
             position="absolute"
@@ -50,7 +44,7 @@ export default function Search() {
               color: "gray.500",
             }}
             pointerEvents="auto"
-            color="fg"
+            color="gray.600"
             cursor="pointer"
             onClick={handleSearchClick}
           >
@@ -70,28 +64,6 @@ export default function Search() {
             </svg>
           </Box>
         </Box>
-
-        {query && filtered.length > 0 && (
-          <List
-            spacing={0}
-            borderTop="1px solid"
-            borderColor="gray.300"
-            mt={2}
-          >
-            {filtered.map((item, index) => (
-              <ListItem
-                key={index}
-                px={4}
-                py={2}
-                borderTop="1px solid"
-                borderColor="transparent"
-                _hover={{ bg: "gray.300", cursor: "pointer" }}
-              >
-                <Text color="fg">{item}</Text>
-              </ListItem>
-            ))}
-          </List>
-        )}
       </Box>
     </Box>
   );

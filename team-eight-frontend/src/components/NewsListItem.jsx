@@ -1,15 +1,9 @@
-import { useState } from "react";
 import { Box, Flex, Text, Icon, Image } from "@chakra-ui/react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { useState } from "react";
 
-const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
-  const [liked, setLiked] = useState(initiallyLiked || false);
-
-  const openNewsDialog = () => {};
-
-  const handleItemClick = () => {
-    openNewsDialog();
-  };
+const NewsListItem = ({ title, description, thumbnail }) => {
+  const [liked, setLiked] = useState(false);
 
   const handleHeartClick = (e) => {
     e.stopPropagation();
@@ -26,13 +20,12 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
       mb={6}
       boxShadow="sm"
       _hover={{ boxShadow: "md" }}
-      onClick={handleItemClick}
       cursor="pointer"
     >
       <Flex mx={2} height={"100%"} justify="space-between" align="center">
         <Flex>
           <Box
-            width="360px"
+            width="260px"
             borderRadius="md"
             overflow="hidden"
             ml={2}
@@ -42,26 +35,19 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
             aspectRatio={4 / 3}
           >
             {thumbnail ? (
-              <Box
-                width="250px"
-                height="240px"
-                overflow="hidden"
-                borderRadius="md"
-              >
-                <Image
-                  src={thumbnail}
-                  alt="뉴스 썸네일"
-                  width="100%"
-                  height="100%"
-                  objectFit="cover"
-                />
-              </Box>
+              <Image
+                src={thumbnail}
+                alt="뉴스 썸네일"
+                width="100%"
+                height="100%"
+                objectFit="cover"
+              />
             ) : (
               <Box width="100%" height="100%" bg="gray.100" />
             )}
           </Box>
-          <Box pr={8} pt={4}>
-            <Flex direction={"column"} alignItems={"start"} width={"100%"}>
+          <Box pr={8}>
+            <Flex direction={"column"} alignItems={"start"}>
               <Text fontWeight="bold" fontSize="2xl" mb={2}>
                 {title}
               </Text>
@@ -71,7 +57,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
                 mb={2}
                 textAlign="left"
                 noOfLines={3}
-                maxW="90%"
+                maxW="400px"
               >
                 {description}
               </Text>
