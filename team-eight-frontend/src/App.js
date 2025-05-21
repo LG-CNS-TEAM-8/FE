@@ -12,6 +12,7 @@ import Searchpage from "./pages/Searchpage";
 import StartPage from "./pages/StartPage";
 import SignupKeywordPage from "./pages/SignupKeywordPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MypageFavorites from "./pages/MypageFavorites";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ function App() {
               <Route path="search" element={<Searchpage />} />
               <Route path="mypage" element={<Mypage />} />
               <Route path="mypage/edit" element={<MypageEdit />} />
+              <Route path="mypage/favorites" element={<MypageFavorites />} />
               <Route path="mypage/settings" element={<MypageSettings />} />
             </Routes>
           </div>

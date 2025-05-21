@@ -14,8 +14,6 @@ import { PasswordInput } from "../components/ui/password-input";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { signup } from "../api/user_api";
-
 const SignupPage = () => {
   const navigate = useNavigate();
   const {

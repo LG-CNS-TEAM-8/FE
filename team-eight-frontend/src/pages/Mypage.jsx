@@ -11,6 +11,8 @@ import {
   Wrap,
   WrapItem,
   Tag,
+  Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 
 import { CiSettings } from "react-icons/ci";
@@ -22,23 +24,15 @@ import NavBar from "../components/NavBar";
 import { Link } from "react-router-dom";
 
 import useUser from "../lib/useUser";
+import useUserFavorites from "../lib/useUserFavorites";
 import { getUserFavorites, getUserInterests } from "../api/user_api";
 import { useEffect, useState } from "react";
 
 const Mypage = () => {
   const { userLoading, user, isLoggedIn } = useUser();
+  const { favoritesLoading, favorites } = useUserFavorites();
   const [interestsRes, setInterestsRes] = useState([]);
-  const [favoritesRes, setFavoritesRes] = useState([]);
-
   useEffect(() => {
-    const favorites = async () => {
-      try {
-        const res = await getUserFavorites();
-        setFavoritesRes(res);
-      } catch (err) {
-        console.error("❌ 유저 최애 가져오기 실패 ❌:", err);
-      }
-    };
     const interests = async () => {
       try {
         const res = await getUserInterests();
@@ -47,10 +41,9 @@ const Mypage = () => {
         console.error("❌ 유저 최애 가져오기 실패 ❌:", err);
       }
     };
-    favorites();
+
     interests();
   }, []);
-
   return (
     <>
       <NavBar />
@@ -123,16 +116,18 @@ const Mypage = () => {
             <Text fontSize={20} fontWeight="bold" mb={5}>
               좋아요를 누른 뉴스들
             </Text>
-            <Icon
-              as={FaPlus}
-              boxSize={6}
-              color="gray.400"
-              _hover={{
-                color: "gray.600",
-                transform: "scale(1.05)",
-                cursor: "pointer",
-              }}
-            />
+            <Link to="/mypage/favorites">
+              <Icon
+                as={FaPlus}
+                boxSize={6}
+                color="gray.400"
+                _hover={{
+                  color: "gray.600",
+                  transform: "scale(1.05)",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           </Flex>
 
           <Grid
@@ -140,29 +135,47 @@ const Mypage = () => {
             rowGap={12}
             columnGap={8}
           >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <GridItem
-                key={item}
-                p={4}
-                borderWidth="1px"
-                borderRadius="lg"
-                boxShadow="md"
-              >
-                <Box
-                  bg="gray.200"
-                  height="180px"
-                  borderRadius="md"
-                  mb={3}
-                ></Box>
-                <Text fontWeight="bold" fontSize={"xl"}>
-                  Title
-                </Text>
-                <Text fontSize="sm" color="gray.600" mt={1}>
-                  Body text for whatever you’d like to say. Add main takeaway
-                  points, quotes, anecdotes, or even a very short story.
-                </Text>
-              </GridItem>
-            ))}
+            {favoritesLoading
+              ? Array(8)
+                  .fill(null)
+                  .map((_, index) => (
+                    <GridItem
+                      key={index}
+                      p={4}
+                      borderWidth="1px"
+                      borderRadius="lg"
+                      boxShadow="md"
+                    >
+                      <Skeleton height="180px" mb={4} />
+                      <SkeletonText noOfLines={1} spacing="4" mb={4} />
+                      <SkeletonText noOfLines={3} spacing="2" />
+                    </GridItem>
+                  ))
+              : favorites?.slice(0, 8).map((item) => (
+                  <GridItem
+                    key={item.id}
+                    p={4}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    boxShadow="md"
+                  >
+                    <Image
+                      src={item.thumbnail}
+                      alt={item.title}
+                      height="180px"
+                      width="100%"
+                      objectFit="cover"
+                      borderRadius="md"
+                      mb={4}
+                    />
+                    <Text fontWeight="bold" fontSize="xl" mb={2}>
+                      {item.title}
+                    </Text>
+                    <Text fontSize="sm" color="gray.600">
+                      {item.description}
+                    </Text>
+                  </GridItem>
+                ))}
           </Grid>
         </Box>
       </Box>
