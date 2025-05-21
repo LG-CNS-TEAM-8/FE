@@ -30,7 +30,6 @@ const NewsList = ({ url }) => {
       <NewsDialog
         articles={articles}
         loading={loadingArticles}
-        contextLabel="AI 추천 뉴스"
       />
     </Box>
   );
