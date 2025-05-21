@@ -11,26 +11,31 @@ import Home from "./pages/Home";
 import Searchpage from "./pages/Searchpage";
 import StartPage from "./pages/StartPage";
 import SignupKeywordPage from "./pages/SignupKeywordPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <Provider>
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<StartPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/signup/keywords" element={<SignupKeywordPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="home" element={<Home />} />
-            <Route path="search" element={<Searchpage />} />
-            <Route path="mypage" element={<Mypage />} />
-            <Route path="mypage/edit" element={<MypageEdit />} />
-            <Route path="mypage/settings" element={<MypageSettings />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider>
+        <BrowserRouter>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<StartPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signup/keywords" element={<SignupKeywordPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="home" element={<Home />} />
+              <Route path="search" element={<Searchpage />} />
+              <Route path="mypage" element={<Mypage />} />
+              <Route path="mypage/edit" element={<MypageEdit />} />
+              <Route path="mypage/settings" element={<MypageSettings />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
   );
 }
 
