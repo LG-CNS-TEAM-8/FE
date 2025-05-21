@@ -23,7 +23,7 @@ export const login = async ({ email, password }) => {
   }
 };
 
-export const signup = async ({ email, password, name }) => {
+export const signup = async ({ email, password, name, interests }) => {
   console.log("Signup API 호출");
   console.log("Email :" + email);
   console.log("Password :" + password);
@@ -35,6 +35,7 @@ export const signup = async ({ email, password, name }) => {
         email,
         password,
         name,
+        interests,
       },
       { headers: { "Content-Type": "application/json" } }
     );

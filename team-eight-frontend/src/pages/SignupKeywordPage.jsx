@@ -14,16 +14,14 @@ import {
 import myLogo from "../assets/myLogo.png";
 import { useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { addInterest, deleteInterest } from "../api/user_api";
+import { signup } from "../api/user_api";
 
 const SignupKeywordPage = () => {
   const location = useLocation();
   const state = location.state;
   const navigate = useNavigate();
-
-  const userId = state.userId;
 
   const [keyword, setKeyword] = useState("");
   const [keywords, setKeywords] = useState([]);
@@ -37,12 +35,6 @@ const SignupKeywordPage = () => {
 
   const handleRemoveKeyword = async (removeKeyword) => {
     setKeywords(keywords.filter((k) => k !== removeKeyword));
-    try {
-      const res = await deleteInterest({ userId, removeKeyword });
-      console.log("키워드 삭제 성공: ", res);
-    } catch (err) {
-      console.error("❌ 키워드 삭제 실패 ❌:", err);
-    }
   };
 
   return (
@@ -113,8 +105,13 @@ const SignupKeywordPage = () => {
             width="full"
             onClick={async () => {
               try {
-                const res = await addInterest({ userId, keywords });
-                console.log("키워드 추가 성공: ", res);
+                // console.log("키워드 추가 성공: ", res);
+                const res = signup({
+                  email: state.email,
+                  password: state.password,
+                  name: state.name,
+                  interests: keywords,
+                });
                 navigate("/login");
               } catch (err) {
                 console.error("❌ 키워드 추가 실패 ❌:", err);

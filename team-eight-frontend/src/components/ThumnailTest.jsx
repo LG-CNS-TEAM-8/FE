@@ -8,11 +8,15 @@ const ThumbnailTest = () => {
 
   useEffect(() => {
     const fetchThumbnail = async () => {
+      const accessToken = localStorage.getItem("accessToken");
       try {
         // proxy 설정 덕분에 localhost:8080으로 자동 프록시 됩니다.
         const res = await axios.get("/news", {
           params: {
             path: "https://n.news.naver.com/mnews/article/018/0006018373",
+          },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 

@@ -32,7 +32,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
       <Flex mx={2} height={"100%"} justify="space-between" align="center">
         <Flex>
           <Box
-            width="260px"
+            width="360px"
             borderRadius="md"
             overflow="hidden"
             ml={2}
@@ -42,19 +42,26 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
             aspectRatio={4 / 3}
           >
             {thumbnail ? (
-              <Image
-                src={thumbnail}
-                alt="뉴스 썸네일"
-                width="100%"
-                height="100%"
-                objectFit="cover"
-              />
+              <Box
+                width="250px"
+                height="240px"
+                overflow="hidden"
+                borderRadius="md"
+              >
+                <Image
+                  src={thumbnail}
+                  alt="뉴스 썸네일"
+                  width="100%"
+                  height="100%"
+                  objectFit="cover"
+                />
+              </Box>
             ) : (
               <Box width="100%" height="100%" bg="gray.100" />
             )}
           </Box>
-          <Box pr={8}>
-            <Flex direction={"column"} alignItems={"start"}>
+          <Box pr={8} pt={4}>
+            <Flex direction={"column"} alignItems={"start"} width={"100%"}>
               <Text fontWeight="bold" fontSize="2xl" mb={2}>
                 {title}
               </Text>
@@ -64,7 +71,7 @@ const NewsListItem = ({ title, description, thumbnail, initiallyLiked }) => {
                 mb={2}
                 textAlign="left"
                 noOfLines={3}
-                maxW="400px"
+                maxW="90%"
               >
                 {description}
               </Text>

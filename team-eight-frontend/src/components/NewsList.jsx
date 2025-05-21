@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import NewsListItem from "./NewsListItem";
+import instance from "../api/axiosInstance";
 
 const NewsList = () => {
   const [articles, setArticles] = useState([]);
@@ -23,7 +23,10 @@ const NewsList = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get("/news");
+        const accessToken = localStorage.getItem("accessToken");
+        const res = await instance.get("/news/ai", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         setArticles(res.data);
       } catch (err) {
         console.error(err);
@@ -42,13 +45,23 @@ const NewsList = () => {
       setLoadingSummary(false);
       return;
     }
-
     const fetchSummary = async () => {
       setLoadingSummary(true);
       setSummaryError(null);
       try {
+        const accessToken = localStorage.getItem("accessToken");
         const article = articles[selectedIndex];
-        const res = await axios.post("/news/summary", { link: article.link });
+        const res = await instance.post(
+          "/news/summary",
+          {
+            link: article.link,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         setSummary(res.data.summary);
       } catch (err) {
         console.error(err);
@@ -57,7 +70,6 @@ const NewsList = () => {
         setLoadingSummary(false);
       }
     };
-
     fetchSummary();
   }, [selectedIndex, articles]);
 
@@ -68,7 +80,7 @@ const NewsList = () => {
   }, [selectedIndex]);
 
   return (
-    <Box p={6}>
+    <Box p={4} width={"100%"}>
       {loadingArticles ? (
         <Box display="flex" justifyContent="center" alignItems="center" py={20}>
           <Spinner size="lg" mr={4} />
@@ -125,7 +137,12 @@ const NewsList = () => {
                 <div
                   tabIndex={-1}
                   ref={focusRef}
-                  style={{ outline: "none", width: 0, height: 0, position: "absolute" }}
+                  style={{
+                    outline: "none",
+                    width: 0,
+                    height: 0,
+                    position: "absolute",
+                  }}
                 />
 
                 <Dialog.Close asChild>
@@ -159,7 +176,9 @@ const NewsList = () => {
                 </Dialog.Title>
 
                 <Text fontSize="sm" color="gray.500" mb={4}>
-                  {`${new Date().getFullYear()}년 ${new Date().getMonth() + 1}월 ${new Date().getDate()}일`}
+                  {`${new Date().getFullYear()}년 ${
+                    new Date().getMonth() + 1
+                  }월 ${new Date().getDate()}일`}
                 </Text>
 
                 <Image
@@ -189,7 +208,12 @@ const NewsList = () => {
                     {summaryError}
                   </Text>
                 ) : (
-                  <Text mb={6} minHeight="100px" bg="transparent" whiteSpace="pre-wrap">
+                  <Text
+                    mb={6}
+                    minHeight="100px"
+                    bg="transparent"
+                    whiteSpace="pre-wrap"
+                  >
                     {summary}
                   </Text>
                 )}

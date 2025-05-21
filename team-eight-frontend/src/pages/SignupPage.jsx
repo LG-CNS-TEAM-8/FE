@@ -29,9 +29,8 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await signup(data);
-      console.log("회원가입 성공: ", res);
-      navigate("/signup/keywords", { state: { userId: res.userId } });
+      console.log("Keyword 추가 페이지로 이동");
+      navigate("/signup/keywords", { state: data });
     } catch (err) {
       console.error("❌ 회원가입 실패 ❌:", err);
     }
@@ -101,7 +100,6 @@ const SignupPage = () => {
                 {errors.name?.message ?? ""}
               </Text>
             </Field.Root>
-            {/* <Link to={"/signup/keywords"}> */}
             <Button
               mt={4}
               borderRadius={"md"}
@@ -112,7 +110,6 @@ const SignupPage = () => {
             >
               다음
             </Button>
-            {/* </Link> */}
           </Stack>
         </form>
       </Box>
