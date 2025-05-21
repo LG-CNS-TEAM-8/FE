@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import NewsDialog from "../components/NewsDialog";
 import instance from "../api/axiosInstance";
 
-const NewsList = () => {
+const NewsList = ({ url }) => {
   const [articles, setArticles] = useState([]);
   const [loadingArticles, setLoadingArticles] = useState(true);
 
@@ -11,7 +11,7 @@ const NewsList = () => {
     const fetchNews = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const res = await instance.get("/news/ai", {
+        const res = await instance.get(`${url}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setArticles(res.data);
@@ -27,7 +27,11 @@ const NewsList = () => {
 
   return (
     <Box p={4} width="100%">
-      <NewsDialog articles={articles} loading={loadingArticles} contextLabel="AI 추천 뉴스" />
+      <NewsDialog
+        articles={articles}
+        loading={loadingArticles}
+        contextLabel="AI 추천 뉴스"
+      />
     </Box>
   );
 };
