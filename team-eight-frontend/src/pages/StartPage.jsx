@@ -32,6 +32,7 @@ const StartPage = () => {
           fontWeight="bold"
           display="inline-flex"
           alignItems="center"
+          color="gray.500"
           _hover={{ textDecoration: "underline", color: "gray.400" }}
         >
           <Text fontSize="xl">로그인하기</Text>
