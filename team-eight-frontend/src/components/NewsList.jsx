@@ -14,7 +14,8 @@ const NewsList = ({ url }) => {
         const res = await instance.get(`${url}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        setArticles(res.data);
+        console.log(res);
+        setArticles(res.data.newsList);
       } catch (err) {
         console.error(err);
       } finally {

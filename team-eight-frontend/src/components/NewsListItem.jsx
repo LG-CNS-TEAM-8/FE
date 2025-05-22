@@ -56,7 +56,7 @@ const NewsListItem = ({ title, description, thumbnail }) => {
           </Box>
           <Box pr={8}>
             <Flex direction={"column"} alignItems={"start"}>
-              <Text fontWeight="bold" fontSize="2xl" mb={2}>
+              <Text fontWeight="bold" fontSize="2xl" mb={4}>
                 {title}
               </Text>
               <Text

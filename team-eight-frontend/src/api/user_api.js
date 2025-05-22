@@ -102,6 +102,26 @@ export const getMe = async () => {
   }
 };
 
+export const editUser = async ({ name, email, interests }) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+    const response = await instance.put(
+      `/user`,
+      { name, email, interests },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response ? error.response.data : error;
+  }
+};
+
 export const getUserFavorites = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
