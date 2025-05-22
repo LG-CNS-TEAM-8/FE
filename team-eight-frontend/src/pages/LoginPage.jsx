@@ -30,9 +30,7 @@ function LoginPage() {
   const onSubmit = async (data) => {
     try {
       setLoginError("");
-      console.log(data);
       const res = await login(data);
-      console.log("로그인 성공!", res);
       // 토큰 저장 예시 (LocalStorage 등)
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);

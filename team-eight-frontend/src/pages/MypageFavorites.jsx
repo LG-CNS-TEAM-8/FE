@@ -18,6 +18,7 @@ import instance from "../api/axiosInstance";
 import NewsDialog from "../components/NewsDialog";
 import Logo from "../assets/myLogo.png";
 import NewsListItem from "../components/NewsListItem";
+import { getMyFavorites } from "../api/favorite_api";
 
 const MypageFavorites = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -37,7 +38,6 @@ const MypageFavorites = () => {
       const res = await instance.get(`${userId}/favorites`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log(res.data);
       setArticles(res.data);
     } catch (err) {
       console.error(err);
@@ -46,8 +46,29 @@ const MypageFavorites = () => {
     }
   };
   useEffect(() => {
-    setLoadingArticles(true); // 새 요청 시작 시 로딩 상태로 초기화
-    fetchNews();
+    const loadFavoritesAndArticles = async () => {
+      try {
+        setLoadingArticles(true);
+        const favs = await getMyFavorites();
+        const map = {};
+        favs.forEach((f) => (map[f.newsLink] = f));
+        setFavoritesMap(map);
+
+        const accessToken = localStorage.getItem("accessToken");
+        const decode = jwtDecode(accessToken);
+        const userId = decode?.userId;
+        const res = await instance.get(`${userId}/favorites`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        setArticles(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingArticles(false);
+      }
+    };
+
+    loadFavoritesAndArticles();
   }, []);
 
   return (
@@ -55,7 +76,6 @@ const MypageFavorites = () => {
       <Box>
         <NavBar />
       </Box>
-
       <Box flex="1" mx={12} mt={10}>
         <VStack mx={4} align="start" mb={8}>
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
@@ -63,7 +83,6 @@ const MypageFavorites = () => {
           </Text>
           {articles.map((article, index) => {
             const fav = favoritesMap[article.newsLink];
-            console.log(fav);
             return (
               <Dialog.Root
                 key={article.newsLink}

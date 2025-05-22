@@ -105,7 +105,6 @@ const SignupKeywordPage = () => {
             width="full"
             onClick={async () => {
               try {
-                // console.log("키워드 추가 성공: ", res);
                 const res = signup({
                   email: state.email,
                   password: state.password,

@@ -5,9 +5,6 @@ import instance from "./axiosInstance";
 // UNAUTHORIZED APIS
 
 export const login = async ({ email, password }) => {
-  console.log("Login API 호출");
-  console.log("Email :" + email);
-  console.log("Password :" + password);
   try {
     const response = await instance.post(
       "/login",
@@ -24,10 +21,6 @@ export const login = async ({ email, password }) => {
 };
 
 export const signup = async ({ email, password, name, interests }) => {
-  console.log("Signup API 호출");
-  console.log("Email :" + email);
-  console.log("Password :" + password);
-  console.log("Name :" + name);
   try {
     const response = await instance.post(
       "/sign-up",
@@ -46,9 +39,6 @@ export const signup = async ({ email, password, name, interests }) => {
 };
 
 export const addInterest = async ({ userId, keywords }) => {
-  console.log("Add Interest API 호출");
-  console.log("UserId :" + userId);
-  console.log("Name :" + keywords);
   try {
     const response = await instance.post(
       "/interest",
@@ -65,9 +55,6 @@ export const addInterest = async ({ userId, keywords }) => {
 };
 
 export const deleteInterest = async ({ userId, removeKeyword }) => {
-  console.log("Delete Interest API 호출");
-  console.log("UserId :" + userId);
-  console.log("Name :" + removeKeyword);
   try {
     const response = await instance.delete(`/interest/delete/${userId}`, {
       data: {
@@ -85,9 +72,7 @@ export const deleteInterest = async ({ userId, removeKeyword }) => {
 export const getMe = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken : " + accessToken);
     const decode = jwtDecode(accessToken);
-    console.log("userId : " + decode.userId);
 
     const response = await instance.get(`/user/${decode.userId}`, {
       headers: {
@@ -125,9 +110,7 @@ export const editUser = async ({ name, email, interests }) => {
 export const getUserFavorites = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken : " + accessToken);
     const decode = jwtDecode(accessToken);
-    console.log("userId : " + decode.userId);
 
     const response = await instance.get(`/${decode.userId}/favorites`, {
       headers: {
@@ -183,9 +166,7 @@ export const deleteAccount = async () => {
 export const getUserInterests = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken : " + accessToken);
     const decode = jwtDecode(accessToken);
-    console.log("userId : " + decode.userId);
 
     const response = await instance.get(`/interest/${decode.userId}`, {
       headers: {

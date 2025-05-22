@@ -27,7 +27,6 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log("Keyword 추가 페이지로 이동");
       navigate("/signup/keywords", { state: data });
     } catch (err) {
       console.error("❌ 회원가입 실패 ❌:", err);

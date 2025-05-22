@@ -23,7 +23,6 @@ const NewsList = ({ url, isHome }) => {
         });
         setArticles(res.data);
       }
-      console.log(res);
     } catch (err) {
       console.error(err);
     } finally {

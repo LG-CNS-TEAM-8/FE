@@ -66,7 +66,6 @@ const MypageEdit = () => {
         ...data,
         interests: keywords,
       };
-      console.log(payload);
       const res = await editUser(payload);
       navigate("/mypage");
     } catch (err) {
