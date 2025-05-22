@@ -75,9 +75,21 @@ const Footer = () => {
             <Text fontWeight="bold" mb={2}>
               Frontend
             </Text>
-            <Text>구민</Text>
-            <Text>오장현</Text>
-            <Text>이준호</Text>
+            <Link
+              href="https://github.com/ku0629"
+              target="_blank"
+              color="white"
+            >구민</Link>
+            <Link
+              href="https://github.com/5ohmydays5"
+              target="_blank"
+              color="white"
+            >오장현</Link>
+            <Link
+              href="https://github.com/Junho0225"
+              target="_blank"
+              color="white"
+            >이준호</Link>
           </VStack>
 
           {/* Backend */}
@@ -85,9 +97,22 @@ const Footer = () => {
             <Text fontWeight="bold" mb={2}>
               Backend
             </Text>
-            <Text>남윤호</Text>
-            <Text>심규환</Text>
-            <Text>정수연</Text>
+            <Link
+              href="https://github.com/Bucoco"
+              target="_blank"
+              color="white"
+            >남윤호</Link>
+
+            <Link
+              href="https://github.com/haribonyam"
+              target="_blank"
+              color="white"
+            >심규환</Link>
+            <Link
+              href="https://github.com/syjungsuyeon"
+              target="_blank"
+              color="white"
+            >심규환</Link>
           </VStack>
         </Flex>
       </Flex>
