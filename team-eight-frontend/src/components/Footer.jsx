@@ -112,7 +112,7 @@ const Footer = () => {
               href="https://github.com/syjungsuyeon"
               target="_blank"
               color="white"
-            >심규환</Link>
+            >정수연</Link>
           </VStack>
         </Flex>
       </Flex>
