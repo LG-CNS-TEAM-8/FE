@@ -45,11 +45,11 @@ const NewsList = ({ url, isHome }) => {
     // url이 바뀌면 뉴스 다시 fetch
     setLoadingArticles(true); // 새 요청 시작 시 로딩 상태로 초기화
     fetchNews(start);
-  }, []);
+  }, [url]);
 
   return (
-    <Box p={4} width="100%">
-      <NewsDialog articles={articles} loading={loadingArticles} />
+    <Box p={0} width="100%">
+      <NewsDialog articles={articles} loading={loadingArticles} isHome={isHome} />
       {!url.includes("/news/search/") && !loadingArticles && (
         <Button onClick={handleLoadMore} size={"xl"} variant={"outline"}>
           다음
