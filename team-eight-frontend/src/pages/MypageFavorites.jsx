@@ -11,11 +11,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import NewsList from "../components/NewsList"; // 경로 맞춰주세요
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useRef, useState } from "react";
 import instance from "../api/axiosInstance";
-import NewsDialog from "../components/NewsDialog";
 import Logo from "../assets/myLogo.png";
 import NewsListItem from "../components/NewsListItem";
 import { getMyFavorites } from "../api/favorite_api";
@@ -104,7 +102,7 @@ const MypageFavorites = () => {
       <Box flex="1" mx={12}>
         <VStack mx={4} align="start">
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
-            좋아요를 누른 뉴스들
+            좋아요한 뉴스 모아보기
           </Text>
           {articles.map((article, index) => {
             const fav = favoritesMap[article.newsLink];
@@ -190,7 +188,7 @@ const MypageFavorites = () => {
                     >
                       #{index + 1} - {article.newsTitle}
                     </Dialog.Title>
-
+                    
                     <Text fontSize="sm" color="gray.500" mb={4}>
                       {article.pubDate}
                     </Text>

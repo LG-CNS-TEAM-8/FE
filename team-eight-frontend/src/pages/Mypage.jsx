@@ -69,7 +69,7 @@ const Mypage = () => {
                 {userLoading ? "Loading" : user?.email}
               </Text>
               <Text mt={4} mb={2} fontWeight="bold">
-                관심 키워드들
+                관심 키워드
               </Text>
               <Wrap mb={6} justify="start">
                 {interestsRes.map((k, index) => (
@@ -113,12 +113,12 @@ const Mypage = () => {
         <Box
           border={"1px solid "}
           borderColor={"gray.200"}
-          p={8}
+          p={4}
           borderRadius="xl"
         >
           <Flex justify={"space-between"}>
-            <Text fontSize={20} fontWeight="bold" mb={5}>
-              좋아요를 누른 뉴스들
+            <Text fontSize={20} fontWeight="bold" mb={4} ml={1}>
+              좋아요한 뉴스 모아보기
             </Text>
             <Link to="/mypage/favorites">
               <Icon
