@@ -46,11 +46,6 @@ export const signup = async ({ email, password, name, interests }) => {
 };
 
 
-/**
- * 이메일 중복 검사
- * @param {string} email
- * @returns {Promise<CheckEmailResponse>}
- */
 export const checkEmail = async (email) => {
   console.log("Check Email API 호출:", email);
   try {
