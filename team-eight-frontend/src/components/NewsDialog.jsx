@@ -10,6 +10,7 @@ import {
 import NewsListItem from "./NewsListItem";
 import instance from "../api/axiosInstance";
 import Logo from "../assets/myLogo.png";
+import { getMyFavorites } from "../api/favorite_api";
 
 const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -18,6 +19,20 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
   const [summaryError, setSummaryError] = useState(null);
   const focusRef = useRef(null);
 
+  const [favoritesMap, setFavoritesMap] = useState({});
+  useEffect(() => {
+    (async () => {
+      try {
+        const favs = await getMyFavorites();
+        const map = {};
+        favs.forEach((f) => (map[f.newsLink] = f));
+        setFavoritesMap(map);
+      } catch (err) {
+        console.error("Failed to load favorites:", err);
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     if (selectedIndex === null) {
       setSummary("");
@@ -25,197 +40,178 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
       setLoadingSummary(false);
       return;
     }
-
-    const fetchSummary = async () => {
+    (async () => {
       setLoadingSummary(true);
       try {
-        const accessToken = localStorage.getItem("accessToken");
+        const token = localStorage.getItem("accessToken");
         const res = await instance.post(
           "/news/summary",
           { link: articles[selectedIndex].link },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setSummary(res.data.summary);
-      } catch (err) {
-        console.error(err);
+      } catch {
         setSummaryError("요약 로딩에 실패했습니다.");
       } finally {
         setLoadingSummary(false);
       }
-    };
-
-    fetchSummary();
+    })();
   }, [selectedIndex, articles]);
 
   useEffect(() => {
-    if (selectedIndex !== null) {
-      focusRef.current?.focus();
-    }
+    if (selectedIndex !== null) focusRef.current?.focus();
   }, [selectedIndex]);
 
-  if (loading) {
+  if (loading)
     return (
       <Box display="flex" justifyContent="center" alignItems="center" py={20}>
         <Spinner size="lg" mr={4} />
         <Text fontSize="lg">관심사를 기반으로 최신 뉴스 선별 중입니다.</Text>
       </Box>
     );
-  }
 
-  if (!articles?.length) {
-    return <Text>뉴스가 없습니다.</Text>;
-  }
+  if (!articles?.length) return <Text>뉴스가 없습니다.</Text>;
 
   return (
     <>
-      {articles.map((article, index) => (
-        <Dialog.Root
-          key={article.link}
-          open={selectedIndex === index}
-          onOpenChange={(open) => {
-            if (!open) setSelectedIndex(null);
-          }}
-        >
-          <Box onClick={() => setSelectedIndex(index)} cursor="pointer">
-            <Dialog.Trigger asChild>
-              <NewsListItem
-                title={article.title}
-                description={article.description}
-                thumbnail={article.thumbnail}
-                initiallyLiked={false}
-              />
-            </Dialog.Trigger>
-          </Box>
+      {articles.map((article, index) => {
+        const fav = favoritesMap[article.link];
+        return (
+          <Dialog.Root
+            key={article.link}
+            open={selectedIndex === index}
+            onOpenChange={(open) => open || setSelectedIndex(null)}
+          >
+            <Box onClick={() => setSelectedIndex(index)} cursor="pointer">
+              <Dialog.Trigger asChild>
+                <NewsListItem
+                  link={article.link}
+                  category={article.category}
+                  title={article.title}
+                  description={article.description}
+                  thumbnail={article.thumbnail}
+                  initiallyLiked={Boolean(fav)}
+                  initialFavId={fav?.id}
+                />
+              </Dialog.Trigger>
+            </Box>
 
-          <Dialog.Portal>
-            <Dialog.Overlay
-              style={{
-                backgroundColor: "rgba(0,0,0,0.5)",
-                position: "fixed",
-                inset: 0,
-              }}
-            />
-            <Dialog.Content
-              style={{
-                backgroundColor: "white",
-                borderRadius: 8,
-                padding: 24,
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "95%",
-                maxWidth: "640px",
-                maxHeight: "80vh",
-                overflowY: "auto",
-              }}
-            >
-              <div
-                tabIndex={-1}
-                ref={focusRef}
+            <Dialog.Portal>
+              <Dialog.Overlay
                 style={{
-                  outline: "none",
-                  width: 0,
-                  height: 0,
-                  position: "absolute",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  position: "fixed",
+                  inset: 0,
                 }}
               />
-
-              <Dialog.Close asChild>
-                <Box
-                  as="button"
-                  position="absolute"
-                  top="0px"
-                  right="10px"
-                  fontSize="1.5rem"
-                  fontWeight="bold"
-                  background="none"
-                  border="none"
-                  cursor="pointer"
-                  _hover={{ color: "red.500" }}
-                  aria-label="닫기"
+              <Dialog.Content
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 8,
+                  padding: 24,
+                  position: "fixed",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "95%",
+                  maxWidth: "640px",
+                  maxHeight: "80vh",
+                  overflowY: "auto",
+                }}
+              >
+                <div
                   tabIndex={-1}
+                  ref={focusRef}
+                  style={{
+                    outline: "none",
+                    width: 0,
+                    height: 0,
+                    position: "absolute",
+                  }}
+                />
+
+                <Dialog.Close asChild>
+                  <Box
+                    as="button"
+                    position="absolute"
+                    top="0"
+                    right="10px"
+                    fontSize="1.5rem"
+                    fontWeight="bold"
+                    background="none"
+                    border="none"
+                    cursor="pointer"
+                    _hover={{ color: "red.500" }}
+                    aria-label="닫기"
+                    tabIndex={-1}
+                  >
+                    ×
+                  </Box>
+                </Dialog.Close>
+
+                <Dialog.Title
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "bold",
+                    marginBottom: "0.5rem",
+                  }}
                 >
-                  ×
-                </Box>
-              </Dialog.Close>
+                  {contextLabel} #{index + 1} - {article.title}
+                </Dialog.Title>
 
-              <Dialog.Title
-                style={{
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  marginBottom: "0.5rem",
-                  marginRight: "7px"
-                }}
-              >
-                {contextLabel} #{index + 1} - {article.title}
-              </Dialog.Title>
+                <Text fontSize="sm" color="gray.500" mb={4}>
+                  {article.pubDate}
+                </Text>
 
-              <Text fontSize="sm" color="gray.500" mb={4}>
-                {article.pubDate}
-              </Text>
-              
-              {article.thumbnail ? (
-                <Image
-                src={article.thumbnail}
-                borderRadius="md"
-                mb={8}
-                width="100%"
-                aspectRatio={16 / 9}
-                objectFit="contain"
-                mx="auto"
-              />
-              ) : (
-                <Image
-                src={Logo}
-                borderRadius="md"
-                mb={8}
-                width="100%"
-                aspectRatio={16 / 9}
-                objectFit="contain"
-                mx="auto"
-              />
-              )}
-              {loadingSummary ? (
-                <Box
+                {(article.thumbnail || Logo) && (
+                  <Image
+                    src={article.thumbnail || Logo}
+                    borderRadius="md"
+                    mb={8}
+                    width="100%"
+                    aspectRatio={16 / 9}
+                    objectFit="contain"
+                    mx="auto"
+                  />
+                )}
+
+                {loadingSummary ? (
+                  <Box
+                    mb={4}
+                    minHeight="100px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap={6}
+                  >
+                    <Spinner size="md" />
+                    <Text>뉴스 내용을 요약 중입니다.</Text>
+                  </Box>
+                ) : summaryError ? (
+                  <Text color="red.500" mb={4}>
+                    {summaryError}
+                  </Text>
+                ) : (
+                  <Text mb={6} whiteSpace="pre-wrap">
+                    {summary}
+                  </Text>
+                )}
+
+                <ChakraLink
+                  href={article.link}
+                  color="blue.500"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   mb={4}
-                  minHeight="100px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  gap={6}
+                  display="block"
                 >
-                  <Spinner size="md" />
-                  <Text>뉴스 내용을 요약 중입니다.</Text>
-                </Box>
-              ) : summaryError ? (
-                <Text color="red.500" mb={4}>
-                  {summaryError}
-                </Text>
-              ) : (
-                <Text mb={6} whiteSpace="pre-wrap">
-                  {summary}
-                </Text>
-              )}
-
-              <ChakraLink
-                href={article.link}
-                color="blue.500"
-                target="_blank"
-                rel="noopener noreferrer"
-                mb={4}
-                display="block"
-              >
-                {article.link}
-              </ChakraLink>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog.Root>
-      ))}
+                  {article.link}
+                </ChakraLink>
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
+        );
+      })}
     </>
   );
 };
