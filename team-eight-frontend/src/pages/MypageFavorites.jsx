@@ -46,6 +46,31 @@ const MypageFavorites = () => {
     }
   };
   useEffect(() => {
+    if (selectedIndex === null) {
+      setSummary("");
+      setSummaryError(null);
+      setLoadingSummary(false);
+      return;
+    }
+    (async () => {
+      setLoadingSummary(true);
+
+      try {
+        const token = localStorage.getItem("accessToken");
+        const res = await instance.post(
+          "/news/summary",
+          { link: articles[selectedIndex].newsLink },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setSummary(res.data.summary);
+      } catch {
+        setSummaryError("요약 로딩에 실패했습니다.");
+      } finally {
+        setLoadingSummary(false);
+      }
+    })();
+  }, [selectedIndex, articles]);
+  useEffect(() => {
     const loadFavoritesAndArticles = async () => {
       try {
         setLoadingArticles(true);
@@ -76,8 +101,8 @@ const MypageFavorites = () => {
       <Box>
         <NavBar />
       </Box>
-      <Box flex="1" mx={12} mt={10}>
-        <VStack mx={4} align="start" mb={8}>
+      <Box flex="1" mx={12}>
+        <VStack mx={4} align="start">
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
             좋아요를 누른 뉴스들
           </Text>

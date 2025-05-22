@@ -13,7 +13,7 @@ import myLogo from "../assets/myLogo.png";
 import { PasswordInput } from "../components/ui/password-input";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { checkEmail } from "../api/user_api";   
+import { checkEmail } from "../api/user_api";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const SignupPage = () => {
     register,
     handleSubmit,
     watch,
-    setError,                               
+    setError,
     formState: { errors },
   } = useForm();
   const password = watch("password");
@@ -83,13 +83,14 @@ const SignupPage = () => {
             <Field.Root>
               <Field.Label>Password</Field.Label>
               <PasswordInput
-                {...register("password", { 
+                {...register("password", {
                   required: "비밀번호는 필수입니다",
                   minLength: { value: 6, message: "최소 6자 이상 입력하세요." },
                   pattern: {
                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/,
-                    message: "영문자와 숫자를 조합하여 최소 6자 이상이어야 합니다."
-                  }
+                    message:
+                      "영문자와 숫자를 조합하여 최소 6자 이상이어야 합니다.",
+                  },
                 })}
                 variant="flushed"
                 placeholder="비밀번호를 입력하세요"
