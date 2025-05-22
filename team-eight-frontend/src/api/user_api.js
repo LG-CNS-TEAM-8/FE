@@ -45,6 +45,28 @@ export const signup = async ({ email, password, name, interests }) => {
   }
 };
 
+
+/**
+ * 이메일 중복 검사
+ * @param {string} email
+ * @returns {Promise<CheckEmailResponse>}
+ */
+export const checkEmail = async (email) => {
+  console.log("Check Email API 호출:", email);
+  try {
+    const response = await instance.post(
+      "/email",
+      { email },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    return response.data;          // { exist: boolean } 같은 구조일 것 같습니다.
+  } catch (error) {
+    // error.response.data에 { status, message, … } 형태로 에러 메시지가 담겨 있을 수 있습니다.
+    throw error.response?.data || error;
+  }
+};
+
+
 export const addInterest = async ({ userId, keywords }) => {
   console.log("Add Interest API 호출");
   console.log("UserId :" + userId);
