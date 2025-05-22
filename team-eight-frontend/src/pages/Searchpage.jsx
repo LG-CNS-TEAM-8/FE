@@ -16,11 +16,11 @@ const Searchpage = () => {
         <Search onSearch={handleSearch} />
       </Box>
 
-      <Box flex="1" mx={12} mt={10}>
+      <Box flex="1" mx={12} mt={0}>
         <VStack mb={8} align="center">
           <Text fontSize="2xl" fontWeight="bold" mb={1}>
             {keyword ? (
-              `"${keyword}" 관련 뉴스들`
+              ``
             ) : (
               <>
                 쏟아지는 뉴스 속, 나에게 필요한 정보만.
@@ -35,7 +35,6 @@ const Searchpage = () => {
           <NewsList
             url={`/news/search/${encodeURIComponent(keyword)}`}
             isHome={false}
-            contextLabel={`"${keyword}" 뉴스`}
           />
         )}
       </Box>

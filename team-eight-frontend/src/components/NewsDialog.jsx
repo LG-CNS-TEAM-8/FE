@@ -12,7 +12,7 @@ import instance from "../api/axiosInstance";
 import Logo from "../assets/myLogo.png";
 import { getMyFavorites } from "../api/favorite_api";
 
-const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
+const NewsDialog = ({ articles, loading, contextLabel = "뉴스", isHome }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [summary, setSummary] = useState("");
   const [loadingSummary, setLoadingSummary] = useState(false);
@@ -62,13 +62,18 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
     if (selectedIndex !== null) focusRef.current?.focus();
   }, [selectedIndex]);
 
-  if (loading)
+  if (loading) {
+    const loadingMessage = isHome
+      ? "관심사를 기반으로 최신 뉴스 선별 중입니다."
+      : "검색어 기반 최신 뉴스를 가져오는 중입니다.";
+
     return (
       <Box display="flex" justifyContent="center" alignItems="center" py={20}>
         <Spinner size="lg" mr={4} />
-        <Text fontSize="lg">관심사를 기반으로 최신 뉴스 선별 중입니다.</Text>
+        <Text fontSize="lg">{loadingMessage}</Text>
       </Box>
     );
+  }
 
   if (!articles?.length) return <Text>뉴스가 없습니다.</Text>;
 
