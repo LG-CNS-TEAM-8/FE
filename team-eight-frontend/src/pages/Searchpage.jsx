@@ -23,7 +23,8 @@ const Searchpage = () => {
               `"${keyword}" 관련 뉴스들`
             ) : (
               <>
-                쏟아지는 뉴스 속, 나에게 필요한 정보만.<br />
+                쏟아지는 뉴스 속, 나에게 필요한 정보만.
+                <br />
                 검색어를 입력해 지금 확인해보세요.
               </>
             )}
@@ -33,6 +34,7 @@ const Searchpage = () => {
         {keyword && (
           <NewsList
             url={`/news/search/${encodeURIComponent(keyword)}`}
+            isHome={false}
             contextLabel={`"${keyword}" 뉴스`}
           />
         )}

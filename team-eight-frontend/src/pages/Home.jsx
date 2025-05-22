@@ -31,11 +31,11 @@ const Home = () => {
           </Text>
           <Text color="gray.500">
             {interests.length > 0
-              ? interests.map(i => i.name).join(", ")
+              ? interests.map((i) => i.name).join(", ")
               : "관심 키워드를 아직 설정하지 않으셨습니다."}
           </Text>
         </VStack>
-        <NewsList url={`/news/ai`} />
+        <NewsList url={`/news/ai`} isHome={true} />
       </Flex>
       <Footer />
     </Box>

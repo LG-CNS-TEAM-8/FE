@@ -135,7 +135,7 @@ const Mypage = () => {
           </Flex>
 
           <Grid
-            templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+            templateColumns="repeat(4, minmax(250px, 1fr))"
             rowGap={12}
             columnGap={8}
           >
@@ -164,8 +164,8 @@ const Mypage = () => {
                     boxShadow="md"
                   >
                     <Image
-                      src={item.thumbnail}
-                      alt={item.title}
+                      src={item.newsThumbnail}
+                      alt={item.newsTitle}
                       height="180px"
                       width="100%"
                       objectFit="cover"
@@ -173,10 +173,10 @@ const Mypage = () => {
                       mb={4}
                     />
                     <Text fontWeight="bold" fontSize="xl" mb={2}>
-                      {item.title}
+                      {item.newsTitle}
                     </Text>
                     <Text fontSize="sm" color="gray.600">
-                      {item.description}
+                      {item.newsSummary}
                     </Text>
                   </GridItem>
                 ))}
