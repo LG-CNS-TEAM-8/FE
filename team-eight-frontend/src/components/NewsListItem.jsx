@@ -1,18 +1,55 @@
+import { useState } from "react";
 import { Box, Flex, Text, Icon, Image } from "@chakra-ui/react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { useState } from "react";
 import Logo from "../assets/myLogo.png";
+import { addFavorite, removeFavorite } from "../api/favorite_api";
 
-const NewsListItem = ({ title, description, thumbnail }) => {
-  const [liked, setLiked] = useState(false);
+const NewsListItem = ({
+  link,
+  category,
+  title,
+  description,
+  thumbnail,
+  initiallyLiked = false,
+  initialFavId = null,
+}) => {
+  const [liked, setLiked] = useState(initiallyLiked);
+  const [favoriteId, setFavoriteId] = useState(initialFavId);
+  const [loading, setLoading] = useState(false);
 
-  const handleHeartClick = (e) => {
+  const handleHeartClick = async (e) => {
     e.stopPropagation();
-    setLiked(!liked);
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const payload = {
+        newsLink: link,
+        newsCategory: category,
+        newsTitle: title,
+        newsSummary: description,
+        newsThumbnail: thumbnail,
+      };
+
+      if (!liked) {
+        const fav = await addFavorite(payload);
+        setFavoriteId(fav.id);
+        setLiked(true);
+      } else {
+        await removeFavorite(favoriteId);
+        setLiked(false);
+        setFavoriteId(null);
+      }
+    } catch (err) {
+      console.error("Failed to toggle favorite:", err);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <Box
-      width={"100%"}
+      width="100%"
       height={250}
       borderWidth="1px"
       borderRadius="lg"
@@ -22,7 +59,7 @@ const NewsListItem = ({ title, description, thumbnail }) => {
       _hover={{ boxShadow: "md" }}
       cursor="pointer"
     >
-      <Flex mx={2} height={"100%"} justify="space-between" align="center">
+      <Flex mx={2} height="100%" justify="space-between" align="center">
         <Flex>
           <Box
             width="260px"
@@ -55,7 +92,7 @@ const NewsListItem = ({ title, description, thumbnail }) => {
             )}
           </Box>
           <Box pr={8}>
-            <Flex direction={"column"} alignItems={"start"}>
+            <Flex direction="column" alignItems="start">
               <Text fontWeight="bold" fontSize="2xl" mb={4}>
                 {title}
               </Text>
@@ -73,13 +110,12 @@ const NewsListItem = ({ title, description, thumbnail }) => {
             </Flex>
           </Box>
         </Flex>
+
         <Icon
-          mt={40}
-          mr={2}
           as={liked ? FaHeart : FaRegHeart}
           boxSize={8}
           color={liked ? "red.500" : "gray.400"}
-          cursor="pointer"
+          cursor={loading ? "not-allowed" : "pointer"}
           onClick={handleHeartClick}
         />
       </Flex>
