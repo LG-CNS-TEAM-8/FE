@@ -120,7 +120,7 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스", isHome }) => {
                   transform: "translate(-50%, -50%)",
                   width: "95%",
                   maxWidth: "640px",
-                  maxHeight: "80vh",
+                  maxHeight: "90vh",
                   overflowY: "auto",
                 }}
               >
@@ -171,17 +171,18 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스", isHome }) => {
                 {(article.thumbnail || Logo) && (
                   <Image
                     src={article.thumbnail || Logo}
-                    borderRadius="md"
-                    mb={8}
-                    width="100%"
+                    borderRadius="2xl"
+                    my={8}
+                    width="90%"
                     aspectRatio={16 / 9}
-                    objectFit="contain"
+                    objectFit="cover"
                     mx="auto"
                   />
                 )}
 
                 {loadingSummary ? (
                   <Box
+                    mx={4}
                     mb={4}
                     minHeight="100px"
                     display="flex"
@@ -197,7 +198,7 @@ const NewsDialog = ({ articles, loading, contextLabel = "뉴스", isHome }) => {
                     {summaryError}
                   </Text>
                 ) : (
-                  <Text mb={6} whiteSpace="pre-wrap">
+                  <Text mx={4} mb={6} whiteSpace="pre-wrap">
                     {summary}
                   </Text>
                 )}

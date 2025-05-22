@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Skeleton,
+  SkeletonText,
+  VStack,
+} from "@chakra-ui/react";
 import NewsDialog from "../components/NewsDialog";
 import instance from "../api/axiosInstance";
 
@@ -48,8 +56,12 @@ const NewsList = ({ url, isHome }) => {
   }, [url]);
 
   return (
-    <Box p={0} width="100%">
-      <NewsDialog articles={articles} loading={loadingArticles} isHome={isHome} />
+    <Box px={4} width="100%">
+      <NewsDialog
+        articles={articles}
+        loading={loadingArticles}
+        isHome={isHome}
+      />
       {!url.includes("/news/search/") && !loadingArticles && (
         <Button onClick={handleLoadMore} size={"xl"} variant={"outline"}>
           다음

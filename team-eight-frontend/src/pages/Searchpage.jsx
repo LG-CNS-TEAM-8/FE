@@ -22,11 +22,11 @@ const Searchpage = () => {
             {keyword ? (
               ``
             ) : (
-              <>
+              <Flex height={260} justify={"center"} align={"center"}>
                 쏟아지는 뉴스 속, 나에게 필요한 정보만.
                 <br />
                 검색어를 입력해 지금 확인해보세요.
-              </>
+              </Flex>
             )}
           </Text>
         </VStack>
