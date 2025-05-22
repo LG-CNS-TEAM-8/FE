@@ -48,7 +48,7 @@ const NewsListItem = ({ title, description, thumbnail }) => {
           </Box>
           <Box pr={8}>
             <Flex direction={"column"} alignItems={"start"}>
-              <Text fontWeight="bold" fontSize="2xl" mb={2}>
+              <Text fontWeight="bold" fontSize="2xl" mb={4}>
                 {title}
               </Text>
               <Text
@@ -57,7 +57,7 @@ const NewsListItem = ({ title, description, thumbnail }) => {
                 mb={2}
                 textAlign="left"
                 noOfLines={3}
-                maxW="400px"
+                maxW="800px"
               >
                 {description}
               </Text>
