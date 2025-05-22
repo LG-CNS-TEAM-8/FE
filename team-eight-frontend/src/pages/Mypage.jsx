@@ -14,7 +14,6 @@ import {
   Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
-
 import { CiSettings } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
@@ -25,13 +24,14 @@ import { Link } from "react-router-dom";
 
 import useUser from "../lib/useUser";
 import useUserFavorites from "../lib/useUserFavorites";
-import { getUserFavorites, getUserInterests } from "../api/user_api";
+import { getUserInterests } from "../api/user_api";
 import { useEffect, useState } from "react";
 
 const Mypage = () => {
-  const { userLoading, user, isLoggedIn } = useUser();
+  const { userLoading, user } = useUser();
   const { favoritesLoading, favorites } = useUserFavorites();
   const [interestsRes, setInterestsRes] = useState([]);
+
   useEffect(() => {
     const interests = async () => {
       try {
@@ -44,17 +44,20 @@ const Mypage = () => {
 
     interests();
   }, []);
+
   return (
-    <>
+    <Flex direction="column" minH="100vh">
       <NavBar />
-      <Box px={16} minH="100vh">
+
+      <Box px={16} flex="1">
         {/* 상단 프로필 영역 */}
         <Flex
           bg="gray.100"
           p={10}
           borderRadius="2xl"
           justify="space-between"
-          mb={10}
+          mb={5}
+          mt={0}
         >
           <Flex align="center">
             <CgProfile size={180} />
@@ -105,6 +108,7 @@ const Mypage = () => {
             </Link>
           </VStack>
         </Flex>
+
         {/* 하단 뉴스 카드 영역 */}
         <Box
           border={"1px solid "}
@@ -179,8 +183,9 @@ const Mypage = () => {
           </Grid>
         </Box>
       </Box>
+
       <Footer />
-    </>
+    </Flex>
   );
 };
 

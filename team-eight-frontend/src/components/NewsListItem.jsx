@@ -1,6 +1,7 @@
 import { Box, Flex, Text, Icon, Image } from "@chakra-ui/react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useState } from "react";
+import Logo from "../assets/myLogo.png";
 
 const NewsListItem = ({ title, description, thumbnail }) => {
   const [liked, setLiked] = useState(false);
@@ -9,7 +10,6 @@ const NewsListItem = ({ title, description, thumbnail }) => {
     e.stopPropagation();
     setLiked(!liked);
   };
-
   return (
     <Box
       width={"100%"}
@@ -43,7 +43,15 @@ const NewsListItem = ({ title, description, thumbnail }) => {
                 objectFit="cover"
               />
             ) : (
-              <Box width="100%" height="100%" bg="gray.100" />
+              <Image
+                src={Logo}
+                alt="대체 썸네일"
+                width="100%"
+                height="100%"
+                objectFit="contain"
+                background="white"
+                p={4}
+              />
             )}
           </Box>
           <Box pr={8}>
@@ -56,8 +64,9 @@ const NewsListItem = ({ title, description, thumbnail }) => {
                 color="gray.600"
                 mb={2}
                 textAlign="left"
-                noOfLines={3}
-                maxW="800px"
+                noOfLines={7}
+                maxW="950px"
+                maxH="700px"
               >
                 {description}
               </Text>

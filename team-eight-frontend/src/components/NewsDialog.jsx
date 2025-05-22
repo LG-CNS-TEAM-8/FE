@@ -9,8 +9,9 @@ import {
 } from "@chakra-ui/react";
 import NewsListItem from "./NewsListItem";
 import instance from "../api/axiosInstance";
+import Logo from "../assets/myLogo.png";
 
-const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
+const NewsDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [summary, setSummary] = useState("");
   const [loadingSummary, setLoadingSummary] = useState(false);
@@ -41,7 +42,7 @@ const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
         setSummary(res.data.summary);
       } catch (err) {
         console.error(err);
-        setSummaryError("요약을 불러오는 데 실패했습니다.");
+        setSummaryError("요약 로딩에 실패했습니다.");
       } finally {
         setLoadingSummary(false);
       }
@@ -60,7 +61,7 @@ const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" py={20}>
         <Spinner size="lg" mr={4} />
-        <Text fontSize="lg">뉴스를 불러오는 중입니다...</Text>
+        <Text fontSize="lg">관심사를 기반으로 최신 뉴스 선별 중입니다.</Text>
       </Box>
     );
   }
@@ -148,27 +149,37 @@ const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
                   fontSize: "1.25rem",
                   fontWeight: "bold",
                   marginBottom: "0.5rem",
+                  marginRight: "7px"
                 }}
               >
                 {contextLabel} #{index + 1} - {article.title}
               </Dialog.Title>
 
               <Text fontSize="sm" color="gray.500" mb={4}>
-                {`${new Date().getFullYear()}년 ${
-                  new Date().getMonth() + 1
-                }월 ${new Date().getDate()}일`}
+                {article.pubDate}
               </Text>
-
-              <Image
+              
+              {article.thumbnail ? (
+                <Image
                 src={article.thumbnail}
                 borderRadius="md"
                 mb={8}
                 width="100%"
-                maxWidth="400px"
+                aspectRatio={16 / 9}
                 objectFit="contain"
                 mx="auto"
               />
-
+              ) : (
+                <Image
+                src={Logo}
+                borderRadius="md"
+                mb={8}
+                width="100%"
+                aspectRatio={16 / 9}
+                objectFit="contain"
+                mx="auto"
+              />
+              )}
               {loadingSummary ? (
                 <Box
                   mb={4}
@@ -194,7 +205,8 @@ const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
               <ChakraLink
                 href={article.link}
                 color="blue.500"
-                isExternal
+                target="_blank"
+                rel="noopener noreferrer"
                 mb={4}
                 display="block"
               >
@@ -208,4 +220,4 @@ const NewsListWithDialog = ({ articles, loading, contextLabel = "뉴스" }) => {
   );
 };
 
-export default NewsListWithDialog;
+export default NewsDialog;

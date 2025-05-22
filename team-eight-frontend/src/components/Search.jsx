@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Input } from "@chakra-ui/react";
 
 export default function Search({ onSearch }) {
   const [query, setQuery] = useState("");
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSearchClick = () => {
     if (query.trim() === "") return;
@@ -20,6 +25,7 @@ export default function Search({ onSearch }) {
       <Box bg="transparent" borderRadius="md" boxShadow="none" overflow="hidden" p={4}>
         <Box position="relative" width="100%">
           <Input
+            ref={inputRef}
             placeholder="검색어 입력"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

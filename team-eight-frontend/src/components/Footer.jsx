@@ -13,7 +13,7 @@ import logo from "../assets/Logo.png";
 
 const Footer = () => {
   return (
-    <Box bg="black" color="white" height={250} mt={12} py={12} px={5}>
+    <Box bg="black" color="white" height={220} mt={12} py={12} px={5}>
       <Flex mx="12" justify="space-between" wrap="wrap" align="flex-start">
         {/* 왼쪽 아이콘 영역 */}
         <HStack spacing={10} mb={{ base: 6, md: 0 }}>

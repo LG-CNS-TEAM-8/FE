@@ -22,15 +22,17 @@ const NewsList = ({ url }) => {
         setLoadingArticles(false);
       }
     };
+
+    // url이 바뀌면 뉴스 다시 fetch
+    setLoadingArticles(true); // 새 요청 시작 시 로딩 상태로 초기화
     fetchNews();
-  }, []);
+  }, [url]);
 
   return (
     <Box p={4} width="100%">
       <NewsDialog
         articles={articles}
         loading={loadingArticles}
-        contextLabel="AI 추천 뉴스"
       />
     </Box>
   );
