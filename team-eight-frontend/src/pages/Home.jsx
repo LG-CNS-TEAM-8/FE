@@ -1,4 +1,4 @@
-import { Box, Text, VStack, Flex } from "@chakra-ui/react";
+import { Box, Text, VStack, Flex, SkeletonText } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import NewsList from "../components/NewsList"; // 경로 맞춰주세요
@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [interests, setInterests] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInterests = async () => {
@@ -15,6 +16,8 @@ const Home = () => {
         setInterests(data);
       } catch {
         setInterests([]);
+      } finally {
+        setLoading(false);
       }
     };
     fetchInterests();
@@ -28,11 +31,13 @@ const Home = () => {
           <Text fontSize="3xl" fontWeight="bold">
             내가 선택한 키워드로 보는 AI 실시간 뉴스
           </Text>
-          <Text color="gray.500" fontSize="xl">
-            {interests.length > 0
-              ? interests.map((i) => i.name).join(", ")
-              : "관심 키워드를 설정해주세요."}
-          </Text>
+          {loading ? null : (
+            <Text color="gray.500" fontSize="xl">
+              {interests.length > 0
+                ? interests.map((i) => i.name).join(", ")
+                : "관심 키워드를 설정해주세요."}
+            </Text>
+          )}
         </VStack>
         <NewsList url={`/news/ai`} isHome={true} />
       </Flex>
